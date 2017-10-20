@@ -25,12 +25,17 @@ namespace SqlIntro
         {
             using (var conn = new MySqlConnection(_connectionString))
             {
+                conn.Open();
                 var cmd = conn.CreateCommand();
-                cmd.CommandText = ""; //TODO:  Write a SELECT statement that gets all products
+                cmd.CommandText = "select Name, ListPrice from product"; //TODO:  Write a SELECT statement that gets all products
                 var dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    yield return new Product { Name = dr["Name"].ToString() };
+                    yield return new Product
+                    {
+                        Name = dr["Name"].ToString(),
+                        ListPrice = (double)dr["ListPrice"]
+                    };
                 }
             }
         }
@@ -43,6 +48,7 @@ namespace SqlIntro
         {
             using (var conn = new MySqlConnection(_connectionString))
             {
+                conn.Open();
                 var cmd = conn.CreateCommand();
                 cmd.CommandText = ""; //Write a delete statement that deletes by id
                 cmd.ExecuteNonQuery();
@@ -58,6 +64,7 @@ namespace SqlIntro
             //More on this in the future...  Nothing to do here..
             using (var conn = new MySqlConnection(_connectionString))
             {
+                conn.Open();
                 var cmd = conn.CreateCommand();
                 cmd.CommandText = "update product set name = @name where id = @id";
                 cmd.Parameters.AddWithValue("@name", prod.Name);
@@ -73,6 +80,7 @@ namespace SqlIntro
         {
             using (var conn = new MySqlConnection(_connectionString))
             {
+                conn.Open();
                 var cmd = conn.CreateCommand();
                 cmd.CommandText = "INSERT into product (name) values(@name)";
                 cmd.Parameters.AddWithValue("@name", prod.Name);
