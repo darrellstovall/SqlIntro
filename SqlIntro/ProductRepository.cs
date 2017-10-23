@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -51,7 +52,7 @@ namespace SqlIntro
             {
                 conn.Open();
                 var cmd = conn.CreateCommand();
-                cmd.CommandText = ""; //Write a delete statement that deletes by id
+                cmd.CommandText = "DELETE FROM product WHERE ProductID = " + id; //Write a delete statement that deletes by id
                 cmd.ExecuteNonQuery();
             }
         }
@@ -67,12 +68,13 @@ namespace SqlIntro
             {
                 conn.Open();
                 var cmd = conn.CreateCommand();
-                cmd.CommandText = "update product set name = @name where id = @id";
+                cmd.CommandText = "update product set name = @name where ProductId = @id";
                 cmd.Parameters.AddWithValue("@name", prod.Name);
-                cmd.Parameters.AddWithValue("@id", prod.Id);
+                cmd.Parameters.AddWithValue("@id", prod.ProductId);
                 cmd.ExecuteNonQuery();
             }
         }
+
         /// <summary>
         /// Inserts a new Product into the database
         /// </summary>
@@ -87,6 +89,7 @@ namespace SqlIntro
                 cmd.Parameters.AddWithValue("@name", prod.Name);
                 cmd.ExecuteNonQuery();
             }
-        }
+         
+            }
     }
 }

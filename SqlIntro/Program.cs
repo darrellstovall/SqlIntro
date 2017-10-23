@@ -14,7 +14,17 @@ namespace SqlIntro
                 Console.WriteLine(prod.ModifiedDate.ToString("dddd"));
             }
 
-           
+            repo.DeleteProduct(3);
+           Console.WriteLine("This should have deleted line 3 from the SQL database.");
+
+            var product = new Product()
+            {
+                ProductId = 316,
+                Name = "Blades"
+            };
+
+            repo.UpdateProduct(product);
+
             Console.ReadLine();
         }
 
