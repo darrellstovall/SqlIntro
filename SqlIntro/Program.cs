@@ -9,7 +9,7 @@ namespace SqlIntro
         static void Main(string[] args)
         {
             var connectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString; 
-            var repo = new ProductRepository(connectionString);
+            var repo = new SimpleDB(connectionString);
             foreach (var prod in repo.GetProducts().Take(1))
             {
                 Console.WriteLine(prod.ModifiedDate.ToString("dddd"));

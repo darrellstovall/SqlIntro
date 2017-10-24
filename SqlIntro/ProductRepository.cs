@@ -87,6 +87,9 @@ namespace SqlIntro
                 var cmd = conn.CreateCommand();
                 cmd.CommandText = "INSERT INTO product (Name, ProductNumber, MakeFlag, FinishedGoodsFlag, Color, SafetyStockLevel, ReorderPoint, StandardCost, ListPrice, Size, SizeUnitMeasureCode, WeightUnitMeasureCode, Weight, DaysToManufacture, ProductLine, Class, Style, ProductSubcategoryID, ProductModelID, SellStartDate, SellEndDate, DiscontinuedDate, rowguid, ModifiedDate) VALUES ('Awesome Ballbearings', '8541466', 1, 1, 'Purple', 100, 750, 343.6666, 1000, '60', null, 'LB', '1.56', '5', null, 'L', null, 5, '31', '2017-10-23 00:00:00', null, null, 1, '2017-10-23 00:00:01')";
                 cmd.Parameters.AddWithValue("@name", prod.Name);
+                cmd.Parameters.AddWithValue("@ProductId", prod.ProductId);
+                cmd.Parameters.AddWithValue("ModifiedDate", prod.ModifiedDate);
+
                 cmd.ExecuteNonQuery();
             }
          
