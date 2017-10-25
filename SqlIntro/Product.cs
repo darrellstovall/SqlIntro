@@ -4,6 +4,7 @@ namespace SqlIntro
 {
     public class Product
     {
+        public string DataSqlClient { get; set; }
         public int ProductId { get; set; }
         public string Name { get; set; }
         public string ProductNumber { get; set; }

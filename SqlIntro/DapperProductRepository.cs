@@ -1,8 +1,10 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
 
 namespace SqlIntro
 {
@@ -10,7 +12,7 @@ namespace SqlIntro
     {
         private readonly string _connectionString;
 
-        public ProductRepository(string connectionString)
+        public DapperProductRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
@@ -19,22 +21,28 @@ namespace SqlIntro
         {
             using (var conn = new MySqlConnection(_connectionString))
             {
-                public void GetProductsWithReview(Product prod)
-                {
-                    using (var conn = new MySqlConnection(_connectionString))
-                    {
-                        conn.Open();
-                        conn.Execute("select * from product p inner join productreview pr on p.ProductId = pr.ProductID");
-                    }
-                }
-                public void GetProductsAndReviews(Product prod)
-                {
-                    using (var conn = new MySqlConnection(_connectionString))
-                    {
-                        conn.Open();
-                        conn.Execute("select * from product p left join productreview pr on p.ProductId = pr.ProductID");
-                    }
-                }
+                conn.Open();
+                return conn.Query<Product>("select * from product");
+            }
+        }
+
+        public IEnumerable<Product> GetProductsWithReview()
+        {
+            using (var conn = new MySqlConnection(_connectionString))
+            {
+                conn.Open();
+                Console.WriteLine("inner join");
+                return conn.Query<Product>("select * from product p inner join productreview pr on p.ProductId = pr.ProductId");
+            }
+        }
+
+        public IEnumerable<Product> GetProductsAndReviews()
+        {
+            using (var conn = new MySqlConnection(_connectionString))
+            {
+                conn.Open();
+                Console.WriteLine("left join");
+                return conn.Query<Product>("select * from product p left join productreview pr on p.ProductId = pr.ProductId");
             }
         }
     }

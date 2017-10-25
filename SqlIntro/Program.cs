@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Linq;
+using Dapper;
 
 namespace SqlIntro
 {
@@ -8,7 +9,8 @@ namespace SqlIntro
     {
         static void Main(string[] args)
         {
-            var connectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString; 
+            var connectionString = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
+            
             var repo = new SimpleDB(connectionString);
             foreach (var prod in repo.GetProducts().Take(1))
             {
